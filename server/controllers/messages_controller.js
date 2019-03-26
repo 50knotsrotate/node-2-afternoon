@@ -1,12 +1,5 @@
 var id = 1;
-var messages = [
-    {
-        text: "Hi this is a TEST message hahahahah cause it sounds like text message LMAO xD",
-        time: "About tree fiddy",
-        id
-    }
-];
-
+var messages = [];
 
 module.exports = {
     create: (req, res) => { 
@@ -28,7 +21,6 @@ module.exports = {
         messages.forEach((message, i) => { 
             if (message.id == req.params.id) {
                 index = i
-                console.log(index)
             }
         })
        
@@ -46,6 +38,19 @@ module.exports = {
 
      },
     delete: (req, res) => {
-        //find
+         let index = null
+         messages.forEach((message, i) => {
+             if (message.id == req.params.id) {
+                 index = i
+             }
+         })
+
+         if (index != null) {
+             messages.splice(index, 1)
+             res.status(200).send(messages)
+
+         } else {
+             res.status(404).send('Hmm. Cant seem to find that message :(')
+         }
      }
 }
